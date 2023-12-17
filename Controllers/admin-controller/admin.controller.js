@@ -6,7 +6,7 @@ exports.getAllMemoryFrameOrders=catchAsyncErrors(async(req,res,next)=>{
 
 
         // select qro.id as 'order_id', qro.*,sa.*,sa.id as 'sa_id' from qrcode_orders qro left join shipping_address sa ON QRO.shipping_address_id=SA.id;
-        let result=await db.query("select *, o.id as 'order_id' from orders o join shipping_address sa ON o.shipping_address_id=SA.id;");
+        let result=await db.query("select *, o.id as 'order_id' from orders o join shipping_address sa ON o.shipping_address_id=sa.id;");
         if(result[0].length===0){
             return next(new ErrorHandler("No Order Placed Yet",400));
         }
@@ -20,7 +20,7 @@ exports.getAllMemoryFrameOrders=catchAsyncErrors(async(req,res,next)=>{
 });
 exports.getAllQrOrders=catchAsyncErrors(async(req,res,next)=>{
     try {
-        let result=await db.query("select qro.id as 'order_id', qro.*,sa.*,sa.id as 'sa_id' from qrcode_orders qro left join shipping_address sa ON QRO.shipping_address_id=SA.id;");
+        let result=await db.query("select qro.id as 'order_id', qro.*,sa.*,sa.id as 'sa_id' from qrcode_orders qro left join shipping_address sa ON qro.shipping_address_id=sa.id;");
         if(result[0].length===0){
             return next(new ErrorHandler("No Order Placed Yet",400));
         }
@@ -34,7 +34,7 @@ exports.getAllQrOrders=catchAsyncErrors(async(req,res,next)=>{
 exports.getQrCodeOrderById=catchAsyncErrors(async(req,res,next)=>{
     let id=req.params.id
     try {
-        let result=await db.query("select *, qro.id as 'order_id' from qrcode_orders qro join shipping_address sa ON QRO.shipping_address_id=SA.id join users u on qro.email=u.Email where QRO.id = ?",[id]);
+        let result=await db.query("select *, qro.id as 'order_id' from qrcode_orders qro join shipping_address sa ON qro.shipping_address_id=sa.id join users u on qro.email=u.Email where qro.id = ?",[id]);
         
         if(result[0].length===0){
             return next(new ErrorHandler("not found",404));
@@ -49,7 +49,7 @@ exports.getQrCodeOrderById=catchAsyncErrors(async(req,res,next)=>{
 exports.getMemoryFrameOrderById=catchAsyncErrors(async(req,res,next)=>{
     let id=req.params.id
     try {
-        let result=await db.query("select *, o.id as 'order_id' from orders o join shipping_address sa ON o.shipping_address_id=SA.id join users u on o.email=u.Email where o.id = ?",[id]);
+        let result=await db.query("select *, o.id as 'order_id' from orders o join shipping_address sa ON o.shipping_address_id=sa.id join users u on o.email=u.Email where o.id = ?",[id]);
         
         if(result[0].length===0){
             return next(new ErrorHandler("not found",404));
