@@ -4,7 +4,6 @@ const cookieParser = require("cookie-parser");
 const router=require('./Routes/user.routes');
 const fs=require('fs');
 const path=require('path');
-// const globalError = require("./controllers/error-controller/error.controller");
 const globalError=require('./Controllers/error-controller/error.controller')
 const app = express();
 app.use(cookieParser());
@@ -20,7 +19,6 @@ const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'u
 app.get(/^\/(?!api).*/, (req, res) => {
   res.send(indexHtml);
 });
-
 app.use(express.json());
 app.use('/api/v1',router)
 app.options('*',cors())

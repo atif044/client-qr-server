@@ -84,7 +84,7 @@ exports.changeToPaid=catchAsyncErrors(async(req,res,next)=>{
             return next(new ErrorHandler("No Such consignment Found",404));
         }
         return res.status(200).json({status:"success",message:"Changed To Paid"});
-        
+         
     } catch (error) {
         console.log(error)
         return next(
