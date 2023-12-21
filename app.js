@@ -20,7 +20,6 @@ app.use(express.static(path.join(__dirname, './build')));
 
 // Handle all routes on the server side and serve index.html
 app.get('*', (req, res) => {
-  console.log(req.url);
   const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
   res.send(indexHtml);
 });

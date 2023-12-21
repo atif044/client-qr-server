@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.833ae59b.css",
-    "main.js": "/static/js/main.93e7987f.js",
+    "main.js": "/static/js/main.77bd84ac.js",
     "static/js/787.5a388ad2.chunk.js": "/static/js/787.5a388ad2.chunk.js",
     "static/media/RA 4.png": "/static/media/RA 4.722f499fd6b1ba2b3666.png",
     "static/media/rememebred always 2 real 2.png": "/static/media/rememebred always 2 real 2.0d55ced4b6e01fd57a53.png",
@@ -17,11 +17,11 @@
     "static/media/trans.png": "/static/media/trans.0d13ae435ef21c3471ad.png",
     "index.html": "/index.html",
     "main.833ae59b.css.map": "/static/css/main.833ae59b.css.map",
-    "main.93e7987f.js.map": "/static/js/main.93e7987f.js.map",
+    "main.77bd84ac.js.map": "/static/js/main.77bd84ac.js.map",
     "787.5a388ad2.chunk.js.map": "/static/js/787.5a388ad2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.833ae59b.css",
-    "static/js/main.93e7987f.js"
+    "static/js/main.77bd84ac.js"
   ]
 }
