@@ -15,14 +15,10 @@ app.use(
 );
 // Server side rendering react app
 app.use(express.static(path.join(__dirname,'./build')));
-app.get("/home"
-, (req, res) => {
-  const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
-  res.send(indexHtml);
-});
 app.get(/^(?!\/api\b).*|^\/?$/
 , (req, res) => {
-  const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
+  const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'));
+  console.log(indexHtml)
   res.send(indexHtml);
 });
 app.use(express.json());
