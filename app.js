@@ -17,6 +17,7 @@ app.use(
 app.use(express.static(path.join(__dirname,'./build')));
 app.get(/^(?!\/api\b).*|^\/?$/
 , (req, res) => {
+  console.log(req.url)
   const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
   res.send(indexHtml);
 });
