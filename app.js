@@ -16,14 +16,14 @@ app.use(
 );
 
 // Serve static assets (including index.html) from the build directory
-app.use(express.static(path.join(__dirname, './build')));
+// app.use(express.static(path.join(__dirname, './build')));
 
-// Handle all routes on the server side and serve index.html
-app.get(/^(?!\/api\b).*|^\/?$/
-, (req, res) => {
-  const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
-  res.send(indexHtml);
-});
+// // Handle all routes on the server side and serve index.html
+// app.get(/^(?!\/api\b).*|^\/?$/
+// , (req, res) => {
+//   const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
+//   res.send(indexHtml);
+// });
 
 app.use(express.json());
 app.use('/api/v1', router);
