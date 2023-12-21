@@ -15,7 +15,7 @@ app.use(
 );
 // Server side rendering react app
 app.use(express.static(path.join(__dirname,'./build')));
-app.get("/"
+app.get("/home"
 , (req, res) => {
   const indexHtml = fs.readFileSync(path.join(__dirname, './build/index.html'), 'utf8');
   res.send(indexHtml);
