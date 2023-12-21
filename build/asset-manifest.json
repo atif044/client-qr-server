@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.833ae59b.css",
-    "main.js": "/static/js/main.8eb4a624.js",
-    "static/js/787.5a388ad2.chunk.js": "/static/js/787.5a388ad2.chunk.js",
-    "static/media/RA 4.png": "/static/media/RA 4.722f499fd6b1ba2b3666.png",
-    "static/media/rememebred always 2 real 2.png": "/static/media/rememebred always 2 real 2.0d55ced4b6e01fd57a53.png",
-    "static/media/remebers always real 1.png": "/static/media/remebers always real 1.c048527b0c8cca5bfab6.png",
-    "static/media/rembered always 3.png": "/static/media/rembered always 3.565c2f04b93fc4d8a3eb.png",
-    "static/media/IMG_1472.jpeg": "/static/media/IMG_1472.abed7f4edda56e19bf05.jpeg",
-    "static/media/IMG_1473.jpeg": "/static/media/IMG_1473.588ee5e99c37025b5e46.jpeg",
-    "static/media/IMG_1474.jpeg": "/static/media/IMG_1474.de596a6fe042a501ee26.jpeg",
-    "static/media/navLogo.png": "/static/media/navLogo.280a69b933f1e0daddf7.png",
-    "static/media/Ephesis-Regular.ttf": "/static/media/Ephesis-Regular.9d76794a944a1f234087.ttf",
-    "static/media/IMG_1475.jpeg": "/static/media/IMG_1475.4cf91230a4641fa22612.jpeg",
-    "static/media/star.png": "/static/media/star.88221e135c58981f7c68.png",
-    "static/media/trans.png": "/static/media/trans.0d13ae435ef21c3471ad.png",
-    "index.html": "/index.html",
-    "main.833ae59b.css.map": "/static/css/main.833ae59b.css.map",
-    "main.8eb4a624.js.map": "/static/js/main.8eb4a624.js.map",
-    "787.5a388ad2.chunk.js.map": "/static/js/787.5a388ad2.chunk.js.map"
+    "main.css": "/home/static/css/main.df5a6320.css",
+    "main.js": "/home/static/js/main.ec2186cb.js",
+    "static/js/787.5a388ad2.chunk.js": "/home/static/js/787.5a388ad2.chunk.js",
+    "static/media/RA 4.png": "/home/static/media/RA 4.722f499fd6b1ba2b3666.png",
+    "static/media/rememebred always 2 real 2.png": "/home/static/media/rememebred always 2 real 2.0d55ced4b6e01fd57a53.png",
+    "static/media/remebers always real 1.png": "/home/static/media/remebers always real 1.c048527b0c8cca5bfab6.png",
+    "static/media/rembered always 3.png": "/home/static/media/rembered always 3.565c2f04b93fc4d8a3eb.png",
+    "static/media/IMG_1472.jpeg": "/home/static/media/IMG_1472.abed7f4edda56e19bf05.jpeg",
+    "static/media/IMG_1473.jpeg": "/home/static/media/IMG_1473.588ee5e99c37025b5e46.jpeg",
+    "static/media/IMG_1474.jpeg": "/home/static/media/IMG_1474.de596a6fe042a501ee26.jpeg",
+    "static/media/navLogo.png": "/home/static/media/navLogo.280a69b933f1e0daddf7.png",
+    "static/media/Ephesis-Regular.ttf": "/home/static/media/Ephesis-Regular.9d76794a944a1f234087.ttf",
+    "static/media/IMG_1475.jpeg": "/home/static/media/IMG_1475.4cf91230a4641fa22612.jpeg",
+    "static/media/star.png": "/home/static/media/star.88221e135c58981f7c68.png",
+    "static/media/trans.png": "/home/static/media/trans.0d13ae435ef21c3471ad.png",
+    "index.html": "/home/index.html",
+    "main.df5a6320.css.map": "/home/static/css/main.df5a6320.css.map",
+    "main.ec2186cb.js.map": "/home/static/js/main.ec2186cb.js.map",
+    "787.5a388ad2.chunk.js.map": "/home/static/js/787.5a388ad2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.833ae59b.css",
-    "static/js/main.8eb4a624.js"
+    "static/css/main.df5a6320.css",
+    "static/js/main.ec2186cb.js"
   ]
 }
