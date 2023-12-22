@@ -30,6 +30,7 @@ const {
   makePayment,
   makePaymentMemoryFrame,
   checkIfCouponValid,
+  checkIfAlreadyReferred,
 } = require("../Controllers/payment-controller/payment.controller");
 const validatorLogin = require("../Validators/login.validator");
 const shippingValidator = require("../Validators/shipping.validator");
@@ -101,4 +102,5 @@ router
   .route("/getAllConsignments")
   .get(verifyJwt, checkIfAdmin, getAllConsignments);
 router.route("/changeToPaid/:id").get(verifyJwt, checkIfAdmin, changeToPaid);
+router.route('/checkIfAlreadyReferred').get(verifyJwt,checkIfAlreadyReferred);
 module.exports = router;

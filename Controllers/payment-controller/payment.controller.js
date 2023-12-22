@@ -32,9 +32,10 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
         [email, coupon]
       );
     }
+    const roundedAmount=Math.round(amount * 100);
     const charge = await stripe.charges.create({
-      amount: amount * 100,
-      currency: "usd",
+      amount:roundedAmount ,
+      currency: "gbp",
       description: "Payment for your qrcode",
       source: stripeToken,
     });
@@ -76,9 +77,10 @@ exports.makePaymentMemoryFrame = catchAsyncErrors(async (req, res, next) => {
         [email, coupon]
       );
     }
+    const roundedAmount=Math.round(amount * 100 * quantity);
     const charge = await stripe.charges.create({
-      amount: amount * 100 * quantity,
-      currency: "usd",
+      amount: roundedAmount,
+      currency: "gbp",
       description: "Payment for your memory frame",
       source: stripeToken,
     });
@@ -127,3 +129,18 @@ exports.checkIfCouponValid = catchAsyncErrors(async (req, res, next) => {
     );
   }
 });
+exports.checkIfAlreadyReferred=catchAsyncErrors(async(req,res,next)=>{
+  let email = req.userData.user.email;
+  try {
+    let alreadyRefferedBySomeOne=await db.query("select * from consignments where referreduser = ?",[email]);
+    if(alreadyRefferedBySomeOne[0].length>0){
+      return res.status(200).json({status:"success",message:"Already reffered"});
+    }
+    return next(new ErrorHandler("Not referred",400));
+    
+  } catch (error) {
+    return next(
+      new ErrorHandler(error.message, error.statusCode || error.code)
+    );
+  }
+})
