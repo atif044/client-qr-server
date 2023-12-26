@@ -15,7 +15,7 @@ async function sendEmail(to, subject, text) {
       return;
     }
   } catch (error) {
-    // console.error("Error sending email:", error);
+     console.error("Error sending email:", error);
     throw new Error("An error occurred while sending the email");
   }
 }
