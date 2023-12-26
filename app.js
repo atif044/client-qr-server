@@ -17,7 +17,6 @@ app.use(
 app.use(express.static(path.join(__dirname, './build'),{maxAge:86400000,
 
 setHeaders: (res, path) => {
-    // Add cache-control headers for specific file types
     if (path.endsWith('.js') || path.endsWith('.css') || path.endsWith('.png') || path.endsWith('.jpg') || path.endsWith('.jpeg')||
 path.endsWith('.jsx')) {
       res.setHeader('Cache-Control', 'public, max-age=' + 86400000);

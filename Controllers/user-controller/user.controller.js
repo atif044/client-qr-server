@@ -116,6 +116,7 @@ exports.resetPassword=catchAsyncErrors(async(req,res,next)=>{
     }
     let resetToken=generateToken(5);
     let result=await db.query("Insert into resetpasswordtokens(email,tokenvalue) values(?,?)",[email,resetToken]);
+    console.log(result[0].affectedRows)
     if(result[0].affectedRows===0){
       await db.query("ROLLBACK")
       return next(new ErrorHandler("An Error Occurred please try again later",400));
@@ -123,12 +124,13 @@ exports.resetPassword=catchAsyncErrors(async(req,res,next)=>{
     await sendEmail(
       email,
       "Password Reset Link",
-      `Open the link to reset your password http://localhost:5000/resetPasswordLink/${resetToken}`
+      `Open the link to reset your password ${process.env.WEBSITE_ADDRESS}/resetPass/remembered-always/${resetToken}`
     );
     await db.query("COMMIT");
     res.status(200).json({status:"success",message:"Verifcation Code is Sent to Your Email"})
   } catch (error) {
     await db.query("ROLLBACK")
+    
     return next(
       new ErrorHandler(error.message, error.code || error.statusCode)
     );
@@ -164,6 +166,29 @@ exports.verifyResetPasswordToken=catchAsyncErrors(async(req,res,next)=>{
 
   }
 });
+
+exports.checkIfValidResetToken=catchAsyncErrors(async(req,res,next)=>{
+  let token=req.params.token;
+  console.log(token)
+  try {
+    await db.query("START TRANSACTION")
+    let result=await db.query("select * from resetpasswordtokens where tokenvalue =?",[token]);
+    console.log(result[0][0])
+    if(result[0].length===0||Date.now()>(result[0][0]?.created_at+(60*60*1000))){
+      await db.query("ROLLBACK");
+      return next(new ErrorHandler("Code is either invalid or has expired",400));
+    }
+    return res.status(200).json({status:"success",message:"Valid"});
+    
+  } catch (error) {
+    console.log(error)
+    return next(
+      new ErrorHandler(error.message, error.code || error.statusCode)
+    );
+  }
+})
+
+
 exports.addShippingAddress=catchAsyncErrors(async(req,res,next)=>{
   let {country,city,address1,address2,phoneNo,dataEmail}=req.body;
   let email=req.userData.user.email;

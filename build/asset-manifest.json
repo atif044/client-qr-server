@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.fc7e8238.css",
-    "main.js": "/static/js/main.f1706971.js",
+    "main.css": "/static/css/main.08337d26.css",
+    "main.js": "/static/js/main.f80d3bf3.js",
     "static/js/787.5a388ad2.chunk.js": "/static/js/787.5a388ad2.chunk.js",
     "static/media/RA 4.png": "/static/media/RA 4.722f499fd6b1ba2b3666.png",
     "static/media/rememebred always 2 real 2.png": "/static/media/rememebred always 2 real 2.0d55ced4b6e01fd57a53.png",
@@ -16,12 +16,12 @@
     "static/media/star.png": "/static/media/star.88221e135c58981f7c68.png",
     "static/media/trans.png": "/static/media/trans.0d13ae435ef21c3471ad.png",
     "index.html": "/index.html",
-    "main.fc7e8238.css.map": "/static/css/main.fc7e8238.css.map",
-    "main.f1706971.js.map": "/static/js/main.f1706971.js.map",
+    "main.08337d26.css.map": "/static/css/main.08337d26.css.map",
+    "main.f80d3bf3.js.map": "/static/js/main.f80d3bf3.js.map",
     "787.5a388ad2.chunk.js.map": "/static/js/787.5a388ad2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fc7e8238.css",
-    "static/js/main.f1706971.js"
+    "static/css/main.08337d26.css",
+    "static/js/main.f80d3bf3.js"
   ]
 }

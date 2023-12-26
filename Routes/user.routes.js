@@ -18,7 +18,8 @@ const {
   fetchVideos,
   fetchShippingAddresses,
   fetchMyOrders,
-  fethAllVideosAndImages
+  fethAllVideosAndImages,
+  checkIfValidResetToken
 } = require("../Controllers/user-controller/user.controller");
 const {
   uploadImageToCloudinary,
@@ -52,6 +53,7 @@ router
   .post(checkIfLoggedIn, validatorLogin, loginAccount);
 router.route("/myProfile").get(verifyJwt, MyProfile);
 router.route("/resetPassword").post(resetPassword);
+router.route("/checkValidity/:token").post(checkIfValidResetToken);
 router.route("/resetPassword/:token").post(verifyResetPasswordToken);
 router
   .route("/changepassword")
