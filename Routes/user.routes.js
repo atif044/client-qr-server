@@ -5,6 +5,7 @@ const { checkIfAdmin } = require("../middleware/CheckIfAdmin");
 const utils = require("../Utils/uploadToCloudinary");
 const validatorSignup = require("../Validators/signup.validator");
 const ChangePwdValidator = require("../Validators/changepwd.validator");
+const checker=require('../middleware/checker');
 const {
   createAccount,
   loginAccount,
@@ -19,13 +20,20 @@ const {
   fetchShippingAddresses,
   fetchMyOrders,
   fethAllVideosAndImages,
-  checkIfValidResetToken
+  checkIfValidResetToken,
+  fetchAllMessages,
+  getProfilePic,
+  addDates,
+  fetchAllMessagesOfAuthenticatedUser,
+  fetchDates,
+  addNameOfTheDead,
 } = require("../Controllers/user-controller/user.controller");
 const {
   uploadImageToCloudinary,
   uploadVideoToCloudinary,
   deleteFromCloudinary,
   deleteImgFromCloudinary,
+  uploadPP
 } = require("../Controllers/image-video-upload-controller/image-video-upload.controller");
 const {
   makePayment,
@@ -44,6 +52,16 @@ const {
   getMemoryFrameOrderById,
   getAllConsignments,
   changeToPaid,
+  addMessage,
+  removeMessage,
+  getAllUsers,
+  changeStatusOfTheQrOrder,
+  changeStatusOfTheMemory,
+  checkinstock,
+  makeOutOfStock,
+  getAllCoupons,
+  addCoupon,
+  removeCoupon,
 } = require("../Controllers/admin-controller/admin.controller");
 router
   .route("/createaccount")
@@ -88,7 +106,8 @@ router.route("/deleteVideo").post(verifyJwt, deleteFromCloudinary);
 router.route("/deleteImage").post(verifyJwt, deleteImgFromCloudinary);
 router.route("/couponValidity").post(verifyJwt, checkIfCouponValid);
 
-router.route("/getAll/:email").get(fethAllVideosAndImages)
+router.route("/getAll/:email").get(fethAllVideosAndImages);
+router.route("/fetchAllMessage/:email").get(fetchAllMessages);
 // ADMIN ROUTES
 router
   .route("/getOrdersMemoryFrame")
@@ -104,5 +123,22 @@ router
   .route("/getAllConsignments")
   .get(verifyJwt, checkIfAdmin, getAllConsignments);
 router.route("/changeToPaid/:id").get(verifyJwt, checkIfAdmin, changeToPaid);
-router.route('/checkIfAlreadyReferred').get(verifyJwt,checkIfAlreadyReferred);
+router.route("/checkIfAlreadyReferred").get(verifyJwt, checkIfAlreadyReferred);
+router.route("/addMessage").post(verifyJwt, addMessage);
+router.route("/deleteMessage").post(verifyJwt,removeMessage);
+router.route("/getAllUsers").get(getAllUsers);
+router.route("/uploadPP").post(verifyJwt,utils.upload.single("profile"),uploadPP);
+router.route("/getPP/:email").get(getProfilePic);
+router.route("/addDates").post(verifyJwt,addDates);
+router.route("/getAllMessages").get(verifyJwt,fetchAllMessagesOfAuthenticatedUser);
+router.route("/fetchDates").get(verifyJwt,fetchDates);
+router.route("/addName").post(verifyJwt,addNameOfTheDead);
+router.route("/changeStatusQrCode").post(verifyJwt,checkIfAdmin,changeStatusOfTheQrOrder);
+router.route("/changeStatusMemory").post(verifyJwt,checkIfAdmin,changeStatusOfTheMemory);
+router.route("/checkstock").get(checkinstock);
+router.route("/changeStock").post(verifyJwt,checkIfAdmin,makeOutOfStock);
+router.route("/getAllCoupons").get(verifyJwt,checkIfAdmin,getAllCoupons);
+router.route("/createCoupon").post(verifyJwt,checkIfAdmin,addCoupon);
+router.route("/removeCoupon").post(verifyJwt,checkIfAdmin,removeCoupon);
+
 module.exports = router;

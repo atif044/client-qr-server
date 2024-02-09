@@ -5,12 +5,13 @@ const {uploadaImageToCloudinary,uploadaVideoToCloudinary,deleteVideoFromCloudina
 // Controller to upload image to cloudinary
 exports.uploadImageToCloudinary=catchAsyncErrors(async(req,res,next)=>{
     const email=req.userData.user.email;
+    const message=req.body.message;
     try {
         if(!req.file|| !req.file.mimetype.startsWith("image")){
             return next(new ErrorHandler("Please Upload Image Only",400));
         }
         let url=await uploadaImageToCloudinary(req.file.buffer);
-        const result=await db.query('insert into media(email,datalink,mediatype,publicid) values (?,?,?,?)',[email,url.secure_url,"image",url.public_id]);
+        const result=await db.query('insert into media(email,datalink,mediatype,publicid,message) values (?,?,?,?,?)',[email,url.secure_url,"image",url.public_id,message]);
         if(result[0].affectedRows==1){
             return res.status(200).json({status:"success",message:"Image Uploaded Successfully"});
         }
@@ -21,13 +22,13 @@ exports.uploadImageToCloudinary=catchAsyncErrors(async(req,res,next)=>{
 });
 exports.uploadVideoToCloudinary=catchAsyncErrors(async(req,res,next)=>{
     const email=req.userData.user.email;
+    const message=req.body.message;
     try {
-        // check if the file is of other type or not
         if(!req.file||!req.file.mimetype.startsWith("video")){
             return next(new ErrorHandler("Please Upload Video Only",400));
         }
     let url=await uploadaVideoToCloudinary(req.file.buffer)
-    const result=await db.query('insert into media(email,datalink,mediatype,publicid) values (?,?,?,?)',[email,url.secure_url,"video",url.public_id]);
+    const result=await db.query('insert into media(email,datalink,mediatype,publicid,message) values (?,?,?,?,?)',[email,url.secure_url,"video",url.public_id,message]);
     if(result[0].affectedRows==1){
         return res.status(200).json({status:"success",message:"Video Uploaded Successfully"});
     }
@@ -80,3 +81,37 @@ exports.deleteFromCloudinary=catchAsyncErrors(async(req,res,next)=>{
         return next(new ErrorHandler(error.message,error.code||error.statusCode))
     }
 });
+
+
+
+
+
+
+exports.uploadPP=catchAsyncErrors(async(req,res,next)=>{
+    const email=req.userData.user.email;
+    try {
+      let query=await db.query("Select * from users where email = ?",[email]);
+      console.log(query[0][0].p_publicid)
+      if(query[0][0].profilepic!==""){
+        let response=await deleteImageFromCloudinary(query[0][0].p_publicid);
+      }
+      if(!req.file|| !req.file.mimetype.startsWith("image")){
+        return next(new ErrorHandler("Please Upload Image Only",400));
+    }
+    let url=await uploadaImageToCloudinary(req.file.buffer);
+    let result=await db.query("update users set profilepic = ? , p_publicid = ? where email = ?",[url.secure_url,url.public_id,email])
+    if(result[0].affectedRows==1){
+        return res.status(200).json({status:"success",message:"Image Uploaded Successfully"});
+    }
+    return next(new ErrorHandler("An error occurred",400))
+      
+  
+      
+    } catch (error) {
+      return next(
+        new ErrorHandler(error.message, error.code || error.statusCode)
+      );
+    }
+  }
+  )
+  

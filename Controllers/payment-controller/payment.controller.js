@@ -1,3 +1,4 @@
+const { isValidEmail } = require("../../Validators/utils.validator");
 const ErrorHandler = require("../../config/ErrorHandler");
 const catchAsyncErrors = require("../../config/catchAsyncErrors");
 const db = require("../../database/db");
@@ -26,13 +27,16 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
       "insert into qrcode_orders(shape,color,email,shipping_address_id) values (?,?,?,?)",
       [shape, color, email, shipping_address_id]
     );
-    if (coupon !== "") {
+    if (isValidEmail(coupon) &&coupon !== "") {
       const query = await db.query(
         "insert into consignments (referreduser,referredby) values (?,?)",
         [email, coupon]
       );
     }
+    const couponCodeFullOff=await db.query("select * from coupon where coupon = ? and discount = ?",[coupon,100]);
+    await db.query("delete from coupon where coupon = ?",[coupon])
     const roundedAmount=Math.round(amount * 100);
+    if(couponCodeFullOff[0].length===0){
     const charge = await stripe.charges.create({
       amount:roundedAmount ,
       currency: "gbp",
@@ -43,6 +47,7 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
       await db.query("Rollback");
       return next(new ErrorHandler("Error Processing Payment", 400));
     }
+  }
     await db.query("COMMIT");
     return res.status(200).json({
       status: "success",
@@ -71,12 +76,13 @@ exports.makePaymentMemoryFrame = catchAsyncErrors(async (req, res, next) => {
       "insert into orders(product_name,email,quantity,price,shipping_address_id) values(?,?,?,?,?)",
       [name, email, quantity, amount, shipping_address_id]
     );
-    if (coupon !== "") {
+    if (isValidEmail(coupon) &&coupon !== "") {
       const query = await db.query(
         "insert into consignments (referreduser,referredby) values (?,?)",
         [email, coupon]
       );
     }
+    await db.query("delete from coupon where coupon = ?",[coupon])
     const roundedAmount=Math.round(amount * 100 * quantity);
     const charge = await stripe.charges.create({
       amount: roundedAmount,
@@ -104,10 +110,6 @@ exports.checkIfCouponValid = catchAsyncErrors(async (req, res, next) => {
   let coupon = req.body.coupon;
   let email = req.userData.user.email;
   try {
-    let alreadyRefferedBySomeOne=await db.query("select * from consignments where referreduser = ?",[email]);
-    if(alreadyRefferedBySomeOne[0].length>0){
-      return next(new ErrorHandler("You have already been referred by some other user",400))
-    }
     let result = await db.query(
       "select * from consignments where referredby = ? and referreduser = ?",
       [coupon, email]
@@ -115,14 +117,30 @@ exports.checkIfCouponValid = catchAsyncErrors(async (req, res, next) => {
     if (result[0].length > 0) {
       return next(new ErrorHandler("You Have Already Used This", 400));
     }
-    let query = await db.query("Select * from users where email = ?", [coupon]);
+    let query = await db.query("Select * from coupon where coupon = ?", [coupon]);
+    console.log(query[0])
     if (query[0].length === 0) {
+      if (coupon === email) {
+        return next(new ErrorHandler("You cant use your referral code", 400));
+      }
+      let alreadyRefferedBySomeOne=await db.query("select * from consignments where referreduser = ?",[email]);
+      if(alreadyRefferedBySomeOne[0].length>0){
+        return next(new ErrorHandler("You have already been referred by some other user",400))
+      }
+      let checkIfExist=await db.query("select * from users where email = ?",[coupon])
+      if(checkIfExist[0].length===1){
+        return res.status(200).json({
+          status:"success",
+          message:"applied",
+          body:null
+        })
+      }
       return next(new ErrorHandler("Invalid!", 400));
     }
-    if (coupon === email) {
-      return next(new ErrorHandler("You cant use your referral code", 400));
+    else if(query[0].length ===1){
+      return res.status(200).json({ status: "success", message: "Applied",body:query[0][0] });
     }
-    return res.status(200).json({ status: "success", message: "Applied" });
+
   } catch (error) {
     return next(
       new ErrorHandler(error.message, error.statusCode || error.code)
