@@ -91,8 +91,7 @@ exports.uploadPP=catchAsyncErrors(async(req,res,next)=>{
     const email=req.userData.user.email;
     try {
       let query=await db.query("Select * from users where email = ?",[email]);
-      console.log(query[0][0].p_publicid)
-      if(query[0][0].profilepic!==""){
+      if(query[0][0].profilepic!==null){
         let response=await deleteImageFromCloudinary(query[0][0].p_publicid);
       }
       if(!req.file|| !req.file.mimetype.startsWith("image")){
