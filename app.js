@@ -14,7 +14,7 @@ app.use(
   })
 );
 // Serve static assets (including index.html) from the build directory
-app.use(express.static(path.join(__dirname, './build'),{
+app.use("/static",express.static(path.join(__dirname, './build/static'),{
   maxAge:86400000,
 setHeaders: (res, path) => {
     if (path.endsWith('.js') || path.endsWith('.css') || path.endsWith('.png') || path.endsWith('.jpg') || path.endsWith('.jpeg')||
