@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.2674ec03.css",
-    "main.js": "/static/js/main.b5619b2a.js",
-    "static/js/498.22e1726e.chunk.js": "/static/js/498.22e1726e.chunk.js",
-    "static/js/703.a2a8bc35.chunk.js": "/static/js/703.a2a8bc35.chunk.js",
-    "static/js/198.8f19ef75.chunk.js": "/static/js/198.8f19ef75.chunk.js",
-    "static/js/787.5a388ad2.chunk.js": "/static/js/787.5a388ad2.chunk.js",
+    "main.css": "/static/css/main.09c970dd.css",
+    "main.js": "/static/js/main.fa5f1748.js",
+    "static/js/905.c604f7db.chunk.js": "/static/js/905.c604f7db.chunk.js",
+    "static/js/313.5fc7b92b.chunk.js": "/static/js/313.5fc7b92b.chunk.js",
+    "static/js/249.95068669.chunk.js": "/static/js/249.95068669.chunk.js",
+    "static/js/27.9050d91d.chunk.js": "/static/js/27.9050d91d.chunk.js",
     "static/media/RA 4.png": "/static/media/RA 4.722f499fd6b1ba2b3666.png",
     "static/media/rememebred always 2 real 2.png": "/static/media/rememebred always 2 real 2.0d55ced4b6e01fd57a53.png",
     "static/media/remebers always real 1.png": "/static/media/remebers always real 1.c048527b0c8cca5bfab6.png",
@@ -19,19 +19,11 @@
     "static/media/IMG_1474.jpeg": "/static/media/IMG_1474.de596a6fe042a501ee26.jpeg",
     "static/media/Ephesis-Regular.ttf": "/static/media/Ephesis-Regular.9d76794a944a1f234087.ttf",
     "static/media/IMG_1475.jpeg": "/static/media/IMG_1475.4cf91230a4641fa22612.jpeg",
-    "static/media/star.png": "/static/media/star.88221e135c58981f7c68.png",
     "static/media/user.png": "/static/media/user.89b7b4c732932e09ae8c.png",
-    "static/media/trans.png": "/static/media/trans.0d13ae435ef21c3471ad.png",
-    "index.html": "/index.html",
-    "main.2674ec03.css.map": "/static/css/main.2674ec03.css.map",
-    "main.b5619b2a.js.map": "/static/js/main.b5619b2a.js.map",
-    "498.22e1726e.chunk.js.map": "/static/js/498.22e1726e.chunk.js.map",
-    "703.a2a8bc35.chunk.js.map": "/static/js/703.a2a8bc35.chunk.js.map",
-    "198.8f19ef75.chunk.js.map": "/static/js/198.8f19ef75.chunk.js.map",
-    "787.5a388ad2.chunk.js.map": "/static/js/787.5a388ad2.chunk.js.map"
+    "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.2674ec03.css",
-    "static/js/main.b5619b2a.js"
+    "static/css/main.09c970dd.css",
+    "static/js/main.fa5f1748.js"
   ]
 }

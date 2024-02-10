@@ -24,8 +24,8 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
     const values = [email];
     let result = await db.query(sql, values);
     const insertion = await db.query(
-      "insert into qrcode_orders(shape,color,email,shipping_address_id) values (?,?,?,?)",
-      [shape, color, email, shipping_address_id]
+      "insert into qrcode_orders(shape,color,email,shipping_address_id,price) values (?,?,?,?,?)",
+      [shape, color, email, shipping_address_id,amount]
     );
     if (isValidEmail(coupon) &&coupon !== "") {
       const query = await db.query(
@@ -54,7 +54,6 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
       message: "Payment Successful. Admin will contact you soon",
     });
   } catch (error) {
-    console.log(error);
     await db.query("ROLLBACK");
     return next(
       new ErrorHandler(error.message, error.statusCode || error.code)
@@ -73,8 +72,8 @@ exports.makePaymentMemoryFrame = catchAsyncErrors(async (req, res, next) => {
     );
 
     const result = await db.query(
-      "insert into orders(product_name,email,quantity,price,shipping_address_id) values(?,?,?,?,?)",
-      [name, email, quantity, amount, shipping_address_id]
+      "insert into orders(product_name,email,quantity,price,shipping_address_id,price) values(?,?,?,?,?,?)",
+      [name, email, quantity, amount, shipping_address_id,amount*quantity]
     );
     if (isValidEmail(coupon) &&coupon !== "") {
       const query = await db.query(
@@ -118,7 +117,6 @@ exports.checkIfCouponValid = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler("You Have Already Used This", 400));
     }
     let query = await db.query("Select * from coupon where coupon = ?", [coupon]);
-    console.log(query[0])
     if (query[0].length === 0) {
       if (coupon === email) {
         return next(new ErrorHandler("You cant use your referral code", 400));

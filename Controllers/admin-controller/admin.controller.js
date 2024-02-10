@@ -181,7 +181,6 @@ exports.changeStatusOfTheQrOrder=catchAsyncErrors(async(req,res,next)=>{
             message:"status Changed"
         })
     } catch (error) {
-        console.log(error)
         return next(
             new ErrorHandler(error.message, error.code || error.statusCode)
           );

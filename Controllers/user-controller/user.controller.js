@@ -153,7 +153,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
       "Insert into resetpasswordtokens(email,tokenvalue) values(?,?)",
       [email, resetToken]
     );
-    console.log(result[0].affectedRows);
     if (result[0].affectedRows === 0) {
       await db.query("ROLLBACK");
       return next(
@@ -228,14 +227,12 @@ exports.verifyResetPasswordToken = catchAsyncErrors(async (req, res, next) => {
 
 exports.checkIfValidResetToken = catchAsyncErrors(async (req, res, next) => {
   let token = req.params.token;
-  console.log(token);
   try {
     await db.query("START TRANSACTION");
     let result = await db.query(
       "select * from resetpasswordtokens where tokenvalue =?",
       [token]
     );
-    console.log(result[0][0]);
     if (
       result[0].length === 0 ||
       Date.now() > result[0][0]?.created_at + 60 * 60 * 1000
@@ -247,7 +244,6 @@ exports.checkIfValidResetToken = catchAsyncErrors(async (req, res, next) => {
     }
     return res.status(200).json({ status: "success", message: "Valid" });
   } catch (error) {
-    console.log(error);
     return next(
       new ErrorHandler(error.message, error.code || error.statusCode)
     );
@@ -332,7 +328,6 @@ exports.MyProfile = catchAsyncErrors(async (req, res, next) => {
     };
     res.status(200).json({ status: "success", body: Data });
   } catch (error) {
-    console.log(error)
     return next(
       new ErrorHandler(error.message, error.code || error.statusCode)
     );
@@ -371,7 +366,6 @@ exports.fetchVideos = catchAsyncErrors(async (req, res, next) => {
       "select * from media where email = ? and mediatype = ?",
       [email, type]
     );
-    console.log(result[0]);
     if (result[0].length === 0) {
       return next(new ErrorHandler("No Videos to display"));
     }
@@ -507,7 +501,6 @@ exports.fetchAllMessagesOfAuthenticatedUser = catchAsyncErrors(async (req, res, 
     if (query[0].length === 0) {
       return next(new ErrorHandler("No Messages Added", 404));
     }
-    console.log(query[0]);
     return res.status(200).json({
       status: "success",
       message: "Messages Fetched Successfully",
@@ -561,18 +554,16 @@ exports.fetchDates=catchAsyncErrors(async(req,res,next)=>{
   let email=req.userData.user.email;
   try {
     let result=await db.query("Select * from users where email = ?",[email]);
-    if(result[0][0].dob!==null && result[0][0].dod!==null){
           return res.status(200).json({
             status:"success",
             message:"dates fetched successfully",
             body:{
-              dob:result[0][0].dob,
-              dod:result[0][0].dod,
+              dob:result[0][0].dob||"",
+              dod:result[0][0].dod||"",
               deadName:result[0][0].dead_name
             }
           })
-    }
-    return next(new ErrorHandler("dob and dod are null",400));
+    
   } catch (error) {
     return next(
       new ErrorHandler(error.message, error.code || error.statusCode)
