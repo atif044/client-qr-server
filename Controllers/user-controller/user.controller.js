@@ -459,7 +459,7 @@ exports.fethAllVideosAndImages = catchAsyncErrors(async (req, res, next) => {
         videos: videos[0].map(({ datalink,message}) => ({datalink:datalink,message:message})),
         images: images[0].map(({ datalink,message }) => ({datalink:datalink,message:message})),
       },
-      name:query[0][0].Name,
+      name:query[0][0].deadName,
       dob:query[0][0].dob,
       dod:query[0][0].dod
     });
