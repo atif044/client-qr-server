@@ -13,6 +13,7 @@ app.use(
     credentials: true,
   })
 );
+
 // Serve static assets (including index.html) from the build directory
 app.use("/static",express.static(path.join(__dirname, './build/static'),{
   maxAge:86400000,
