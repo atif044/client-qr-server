@@ -589,4 +589,21 @@ exports.addNameOfTheDead=catchAsyncErrors(
       );
     }
   }
-)
+);
+exports.checkIfQrbought=catchAsyncErrors(async(req,res,next)=>{
+  const email=req.userData.user.email;
+  try {
+    let response=await db.query("Select * from users where email = ? and paymentarrived = ?",[email,1]);
+    if(response[0].length===1){
+      console.log("")
+      return res.status(200).json({
+        status:"success"
+      });
+    }
+    return next(new ErrorHandler("You have not bought QR. Buy It First",400))    
+  } catch (error) {
+     return next(
+        new ErrorHandler(error.message, error.code || error.statusCode)
+      );
+  }
+})

@@ -27,6 +27,7 @@ const {
   fetchAllMessagesOfAuthenticatedUser,
   fetchDates,
   addNameOfTheDead,
+  checkIfQrbought,
 } = require("../Controllers/user-controller/user.controller");
 const {
   uploadImageToCloudinary,
@@ -140,5 +141,5 @@ router.route("/changeStock").post(verifyJwt,checkIfAdmin,makeOutOfStock);
 router.route("/getAllCoupons").get(verifyJwt,checkIfAdmin,getAllCoupons);
 router.route("/createCoupon").post(verifyJwt,checkIfAdmin,addCoupon);
 router.route("/removeCoupon").post(verifyJwt,checkIfAdmin,removeCoupon);
-
+router.route("/checkqrbought").get(verifyJwt,checkIfQrbought);
 module.exports = router;
