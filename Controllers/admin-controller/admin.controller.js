@@ -26,9 +26,9 @@ exports.getAllMemoryFrameOrders=catchAsyncErrors(async(req,res,next)=>{
 });
 exports.getAllQrOrders=catchAsyncErrors(async(req,res,next)=>{
     try {
-        let result=await db.query("select qro.id as 'order_id', qro.*,sa.*,sa.id as 'sa_id' from qrcode_orders qro left join shipping_address sa ON qro.shipping_address_id=sa.id where qro.status = ? order by qro.Time desc;",["delivered"]);
-        let result2=await db.query("select qro.id as 'order_id', qro.*,sa.*,sa.id as 'sa_id' from qrcode_orders qro left join shipping_address sa ON qro.shipping_address_id=sa.id where qro.status = ? order by qro.Time desc;",["shipping"]);
-        let result3=await db.query("select qro.id as 'order_id', qro.*,sa.*,sa.id as 'sa_id' from qrcode_orders qro left join shipping_address sa ON qro.shipping_address_id=sa.id where qro.status = ? order by qro.Time desc;",["In Transit"]);
+        let result=await db.query("SELECT u.id AS 'userid', qro.id AS 'order_id', qro.*, sa.*, sa.id AS 'sa_id' FROM qrcode_orders qro LEFT JOIN shipping_address sa ON qro.shipping_address_id = sa.id JOIN users u ON u.Email = sa.email WHERE qro.status = ?  ORDER BY qro.`Time` DESC;",["delivered"]);
+        let result2=await db.query("SELECT u.id AS 'userid', qro.id AS 'order_id', qro.*, sa.*, sa.id AS 'sa_id' FROM qrcode_orders qro LEFT JOIN shipping_address sa ON qro.shipping_address_id = sa.id JOIN users u ON u.Email = sa.email WHERE qro.status = ?  ORDER BY qro.`Time` DESC;",["shipping"]);
+        let result3=await db.query("SELECT u.id AS 'userid', qro.id AS 'order_id', qro.*, sa.*, sa.id AS 'sa_id' FROM qrcode_orders qro LEFT JOIN shipping_address sa ON qro.shipping_address_id = sa.id JOIN users u ON u.Email = sa.email WHERE qro.status = ?  ORDER BY qro.`Time` DESC;",["In Transit"]);
         if(result[0].length===0 &&result2.length===0 && result3.length===0){
             return next(new ErrorHandler("No Order Placed Yet",400));
         }

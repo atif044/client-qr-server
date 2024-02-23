@@ -28,6 +28,7 @@ const {
   fetchDates,
   addNameOfTheDead,
   checkIfQrbought,
+  getProfilePic1,
 } = require("../Controllers/user-controller/user.controller");
 const {
   uploadImageToCloudinary,
@@ -130,6 +131,7 @@ router.route("/deleteMessage").post(verifyJwt,removeMessage);
 router.route("/getAllUsers").get(getAllUsers);
 router.route("/uploadPP").post(verifyJwt,utils.upload.single("profile"),uploadPP);
 router.route("/getPP/:email").get(getProfilePic);
+router.route("/getPPP/:email").get(getProfilePic1);
 router.route("/addDates").post(verifyJwt,addDates);
 router.route("/getAllMessages").get(verifyJwt,fetchAllMessagesOfAuthenticatedUser);
 router.route("/fetchDates").get(verifyJwt,fetchDates);

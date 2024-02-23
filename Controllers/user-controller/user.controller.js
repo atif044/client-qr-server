@@ -433,7 +433,7 @@ exports.fethAllVideosAndImages = catchAsyncErrors(async (req, res, next) => {
   try {
     let email = req.params.email;
     let result = await db.query(
-      "Select paymentarrived from users where email = ?",
+      "Select paymentarrived from users where id = ?",
       [email]
     );
     if (result[0].length === 0) {
@@ -441,15 +441,15 @@ exports.fethAllVideosAndImages = catchAsyncErrors(async (req, res, next) => {
     } else if (result[0][0].paymentarrived === 0) {
       return next(new ErrorHandler("Please Pay to active your qr code", 400));
     }
-    let query=await db.query("Select * from users where email = ?",[email]);
+    let query=await db.query("Select * from users where id = ?",[email]);
 
     let videos = await db.query(
       "select * from media where email = ? and mediatype = ? ",
-      [email, "video"]
+      [query[0][0].Email, "video"]
     );
     let images = await db.query(
       "select * from media where email = ? and mediatype = ? ",
-      [email, "image"]
+      [query[0][0].Email, "image"]
     );
 
     return res.status(200).json({
@@ -473,9 +473,10 @@ exports.fethAllVideosAndImages = catchAsyncErrors(async (req, res, next) => {
 exports.fetchAllMessages = catchAsyncErrors(async (req, res, next) => {
   const email = req.params.email;
   try {
+    let resonse=await db.query("select * from users where id = ?",[email]);
     let query = await db.query(
       "select message from messages where useremail = ? ",
-      [email]
+      [resonse[0][0].Email]
     );
     if (query[0].length === 0) {
       return next(new ErrorHandler("No Messages Added", 404));
@@ -514,6 +515,21 @@ exports.fetchAllMessagesOfAuthenticatedUser = catchAsyncErrors(async (req, res, 
 });
 
 exports.getProfilePic=catchAsyncErrors(async(req,res,next)=>{
+  const email=req.params.email;
+  try {
+    let query=await db.query("Select * from users where id = ?",[email]);
+    return res.status(200).json(
+      {
+        status:"success",
+      body:query[0][0].profilepic});
+    
+  } catch (error) {
+    return next(
+      new ErrorHandler(error.message, error.code || error.statusCode)
+    );
+  }
+})
+exports.getProfilePic1=catchAsyncErrors(async(req,res,next)=>{
   const email=req.params.email;
   try {
     let query=await db.query("Select * from users where email = ?",[email]);
