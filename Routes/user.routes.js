@@ -29,6 +29,7 @@ const {
   addNameOfTheDead,
   checkIfQrbought,
   getProfilePic1,
+  getPricesOfTheProducts,
 } = require("../Controllers/user-controller/user.controller");
 const {
   uploadImageToCloudinary,
@@ -64,6 +65,7 @@ const {
   getAllCoupons,
   addCoupon,
   removeCoupon,
+  changePricing,
 } = require("../Controllers/admin-controller/admin.controller");
 router
   .route("/createaccount")
@@ -144,4 +146,6 @@ router.route("/getAllCoupons").get(verifyJwt,checkIfAdmin,getAllCoupons);
 router.route("/createCoupon").post(verifyJwt,checkIfAdmin,addCoupon);
 router.route("/removeCoupon").post(verifyJwt,checkIfAdmin,removeCoupon);
 router.route("/checkqrbought").get(verifyJwt,checkIfQrbought);
+router.route("/getPrice").get(getPricesOfTheProducts);
+router.route("/changePricing").post(verifyJwt,checkIfAdmin,changePricing);
 module.exports = router;

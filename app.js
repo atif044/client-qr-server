@@ -24,6 +24,18 @@ path.endsWith('.jsx')) {
     }
   },
 }));
+app.get('/favicon.ico', (req, res) => {
+  const faviconPath = path.join(__dirname, './build/favicon.ico');
+  fs.readFile(faviconPath, (err, data) => {
+    if (err) {
+      console.error('Error reading favicon file:', err);
+      res.status(404).end();
+    } else {
+      res.setHeader('Content-Type', 'image/x-icon');
+      res.send(data);
+    }
+  });
+});
 // Handle all routes on the server side and serve index.html
 app.get(/^(?!\/api\b).*|^\/?$/
 , (req, res) => {

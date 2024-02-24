@@ -622,4 +622,21 @@ exports.checkIfQrbought=catchAsyncErrors(async(req,res,next)=>{
         new ErrorHandler(error.message, error.code || error.statusCode)
       );
   }
+});
+exports.getPricesOfTheProducts=catchAsyncErrors(async(req,res,next)=>{
+  try {
+    let response=await db.query("select * from products where id = ?",[1]);
+    let response2=await db.query("select * from products where id = ?",[2]);
+    return res.status(200).json({
+      status:"success",
+      qr:response2[0][0],
+      frame:response[0][0]
+    });
+    
+  } catch (error) {
+    return next(
+      new ErrorHandler(error.message, error.code || error.statusCode)
+    );
+  }
 })
+

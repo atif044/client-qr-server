@@ -293,3 +293,21 @@ exports.getAllCoupons=catchAsyncErrors(async(req,res,next)=>{
           );
     }
 });
+
+exports.changePricing=catchAsyncErrors(async(req,res,next)=>{
+    let id=req.body.id;
+    let price = req.body.price;
+    let discountedPrice=req.body.discountedPrice;
+    try {
+        let response=await db.query("select * from products where id = ?",[id]);
+        if(response[0].length===0){
+            return next(new ErrorHandler("Product doesnt exist",400));
+        }
+        let query= await db.query("update products set price = ?, discountedPrice = ? where id = ?",[price,discountedPrice,id]);
+        return res.status(200).json({status:"success",message:"Price Updated Successfully"});
+    } catch (error) {
+        return next(
+            new ErrorHandler(error.message, error.code || error.statusCode)
+          );
+    }
+})
