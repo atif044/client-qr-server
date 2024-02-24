@@ -25,7 +25,7 @@ path.endsWith('.jsx')) {
   },
 }));
 app.get('/favicon.ico', (req, res) => {
-  const faviconPath = path.join(__dirname, './build/favicon.ico');
+  const faviconPath = path.join(__dirname, './build/favicon.png');
   fs.readFile(faviconPath, (err, data) => {
     if (err) {
       console.error('Error reading favicon file:', err);
