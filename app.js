@@ -31,7 +31,7 @@ app.get('/favicon.ico', (req, res) => {
       console.error('Error reading favicon file:', err);
       res.status(404).end();
     } else {
-      res.setHeader('Content-Type', 'image/x-icon');
+      res.setHeader('Content-Type', 'image/png');
       res.send(data);
     }
   });
