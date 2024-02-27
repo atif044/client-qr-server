@@ -72,7 +72,7 @@ exports.makePaymentMemoryFrame = catchAsyncErrors(async (req, res, next) => {
     );
 
     const result = await db.query(
-      "insert into orders(product_name,email,quantity,price,shipping_address_id,price) values(?,?,?,?,?,?)",
+      "insert into orders(product_name,email,quantity,price,shipping_address_id) values(?,?,?,?,?)",
       [name, email, quantity, amount, shipping_address_id,amount*quantity]
     );
     if (isValidEmail(coupon) &&coupon !== "") {
@@ -82,7 +82,7 @@ exports.makePaymentMemoryFrame = catchAsyncErrors(async (req, res, next) => {
       );
     }
     await db.query("delete from coupon where coupon = ?",[coupon])
-    const roundedAmount=Math.round(amount * 100 * quantity);
+    const roundedAmount=Math.round(amount * 100 );
     const charge = await stripe.charges.create({
       amount: roundedAmount,
       currency: "gbp",

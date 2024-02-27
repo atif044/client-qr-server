@@ -251,19 +251,19 @@ exports.checkIfValidResetToken = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.addShippingAddress = catchAsyncErrors(async (req, res, next) => {
-  let { country, city, address1, address2, phoneNo, dataEmail } = req.body;
+  let { country, city, address1, address2, phoneNo, dataEmail,postcode } = req.body;
   let email = req.userData.user.email;
   try {
     let query = await db.query(
       "select count(Country) as 'count' from shipping_address where email = ?",
       [email]
     );
-    if (query[0][0].count == 3) {
+    if (query[0][0].count == 5) {
       return next(new ErrorHandler("Can't Add More than 3 Addresses", 400));
     }
     let result = await db.query(
-      "insert into shipping_address(Country,City,Address1,Address2,phoneNo,email,userChoiceEmail) values (?,?,?,?,?,?,?)",
-      [country, city, address1, address2, phoneNo, email, dataEmail]
+      "insert into shipping_address(Country,City,Address1,Address2,phoneNo,email,userChoiceEmail,postalcode) values (?,?,?,?,?,?,?,?)",
+      [country, city, address1, address2, phoneNo, email, dataEmail,postcode]
     );
     if (result[0].affectedRows === 0) {
       return next(new ErrorHandler("An Error Occurred", 400));
