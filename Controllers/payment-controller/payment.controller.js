@@ -7,7 +7,7 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
   const email = req.userData.user.email;
   try {
     await db.query("START TRANSACTION");
-    const { stripeToken, amount, shipping_address_id, shape, color, coupon } =
+    const { stripeToken, amount, shipping_address_id, shape, color, coupon,cardHolder } =
       req.body;
     const [rows, fields] = await db.query(
       "Select * from users where email = ?",
