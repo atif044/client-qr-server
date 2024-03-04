@@ -36,7 +36,7 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
     const couponCodeFullOff=await db.query("select * from coupon where coupon = ? and discount = ?",[coupon,100]);
     await db.query("delete from coupon where coupon = ?",[coupon])
     const roundedAmount=Math.round(amount * 100);
-    if(couponCodeFullOff[0].length===0){
+    // if(couponCodeFullOff[0].length===0){
     const charge = await stripe.charges.create({
       amount:roundedAmount ,
       currency: "gbp",
@@ -47,7 +47,7 @@ exports.makePayment = catchAsyncErrors(async (req, res, next) => {
       await db.query("Rollback");
       return next(new ErrorHandler("Error Processing Payment", 400));
     }
-  }
+  // }
     await db.query("COMMIT");
     return res.status(200).json({
       status: "success",
